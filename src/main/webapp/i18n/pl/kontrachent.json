@@ -1,0 +1,27 @@
+{
+  "fakturoBotApp": {
+    "kontrachent": {
+      "home": {
+        "title": "Kontrachent",
+        "createLabel": "Dodaj Kontrachent",
+        "createOrEditLabel": "Dodaj lub edytuj: Kontrachent",
+        "search": "Szukaj Kontrachent",
+        "notFound": "No Kontrachents found"
+      },
+      "created": "Utworzono nowy obiekt typu Kontrachent z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Kontrachent z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Kontrachent z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Kontrachent {{ id }}?"
+      },
+      "detail": {
+        "title": "Kontrachent"
+      },
+      "nazwaKontrachenta": "Nazwa Kontrachenta",
+      "emailKontrachenta": "Email Kontrachenta",
+      "numerKontrachenta": "Numer Kontrachenta",
+      "terminKontrachenta": "Termin Kontrachenta",
+      "faktura": "Faktura"
+    }
+  }
+}

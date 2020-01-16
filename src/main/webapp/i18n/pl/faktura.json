@@ -1,0 +1,29 @@
+{
+  "fakturoBotApp": {
+    "faktura": {
+      "home": {
+        "title": "Faktura",
+        "createLabel": "Dodaj Faktura",
+        "createOrEditLabel": "Dodaj lub edytuj: Faktura",
+        "search": "Szukaj Faktura",
+        "notFound": "No Fakturas found"
+      },
+      "created": "Utworzono nowy obiekt typu Faktura z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Faktura z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Faktura z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Faktura {{ id }}?"
+      },
+      "detail": {
+        "title": "Faktura"
+      },
+      "numerFaktury": "Numer Faktury",
+      "kwotaFaktury": "Kwota Faktury",
+      "dataFaktury": "Data Faktury",
+      "typFaktury": "Typ Faktury",
+      "statusFaktury": "Status Faktury",
+      "zalegloscFaktury": "Zaleglosc Faktury",
+      "kontrachent": "Kontrachent"
+    }
+  }
+}

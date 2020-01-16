@@ -1,0 +1,11 @@
+id;numer_faktury;kwota_faktury;data_faktury;typ_faktury;status_faktury;zaleglosc_faktury
+1;Directives parse open-source;17140;2020-01-16;Przychodowa;Nowe;Zalegla
+2;Stravenue silver Reunion;84673;2020-01-16;Przychodowa;Nowe;Zalegla
+3;Direct green;49771;2020-01-16;Przychodowa;Nowe;OK
+4;turquoise Producer PCI;7130;2020-01-16;Kosztowa;Nowe;OK
+5;Computers;98305;2020-01-16;Kosztowa;Nowe;OK
+6;neural task-force Incredible;15469;2020-01-16;Kosztowa;Zaplacone;OK
+7;Tasty;44993;2020-01-16;Kosztowa;Nowe;Zalegla
+8;brand;92681;2020-01-16;Kosztowa;Zaplacone;OK
+9;needs-based;71242;2020-01-16;Przychodowa;Nowe;Zalegla
+10;Ergonomic Fiji;68369;2020-01-16;Przychodowa;Nowe;OK
