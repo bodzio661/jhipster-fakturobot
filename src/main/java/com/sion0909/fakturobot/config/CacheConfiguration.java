@@ -42,6 +42,9 @@ public class CacheConfiguration {
             createCache(cm, com.sion0909.fakturobot.domain.User.class.getName());
             createCache(cm, com.sion0909.fakturobot.domain.Authority.class.getName());
             createCache(cm, com.sion0909.fakturobot.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.sion0909.fakturobot.domain.Faktura.class.getName());
+            createCache(cm, com.sion0909.fakturobot.domain.Kontrachent.class.getName());
+            createCache(cm, com.sion0909.fakturobot.domain.Kontrachent.class.getName() + ".fakturas");
             // jhipster-needle-ehcache-add-entry
         };
     }

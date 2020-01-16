@@ -1,0 +1,39 @@
+{
+    "name": "Kontrachent",
+    "fields": [
+        {
+            "fieldName": "nazwaKontrachenta",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "emailKontrachenta",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numerKontrachenta",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "terminKontrachenta",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "faktura",
+            "otherEntityRelationshipName": "kontrachent",
+            "relationshipName": "faktura"
+        }
+    ],
+    "changelogDate": "20200116171739",
+    "entityTableName": "kontrachent",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}
