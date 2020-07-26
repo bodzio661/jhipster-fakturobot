@@ -5,30 +5,27 @@ import com.sion0909.fakturobot.domain.Faktura;
 import com.sion0909.fakturobot.repository.FakturaRepository;
 import com.sion0909.fakturobot.repository.search.FakturaSearchRepository;
 import com.sion0909.fakturobot.service.FakturaService;
-import com.sion0909.fakturobot.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sion0909.fakturobot.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -43,6 +40,9 @@ import com.sion0909.fakturobot.domain.enumeration.Zaleglosc;
  * Integration tests for the {@link FakturaResource} REST controller.
  */
 @SpringBootTest(classes = FakturoBotApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class FakturaResourceIT {
 
     private static final String DEFAULT_NUMER_FAKTURY = "AAAAAAAAAA";
@@ -78,35 +78,12 @@ public class FakturaResourceIT {
     private FakturaSearchRepository mockFakturaSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restFakturaMockMvc;
 
     private Faktura faktura;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final FakturaResource fakturaResource = new FakturaResource(fakturaService);
-        this.restFakturaMockMvc = MockMvcBuilders.standaloneSetup(fakturaResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -150,10 +127,9 @@ public class FakturaResourceIT {
     @Transactional
     public void createFaktura() throws Exception {
         int databaseSizeBeforeCreate = fakturaRepository.findAll().size();
-
         // Create the Faktura
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isCreated());
 
@@ -182,7 +158,7 @@ public class FakturaResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -204,8 +180,9 @@ public class FakturaResourceIT {
 
         // Create the Faktura, which fails.
 
+
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -222,8 +199,9 @@ public class FakturaResourceIT {
 
         // Create the Faktura, which fails.
 
+
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -240,8 +218,9 @@ public class FakturaResourceIT {
 
         // Create the Faktura, which fails.
 
+
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -258,8 +237,9 @@ public class FakturaResourceIT {
 
         // Create the Faktura, which fails.
 
+
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -276,8 +256,9 @@ public class FakturaResourceIT {
 
         // Create the Faktura, which fails.
 
+
         restFakturaMockMvc.perform(post("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -294,7 +275,7 @@ public class FakturaResourceIT {
         // Get all the fakturaList
         restFakturaMockMvc.perform(get("/api/fakturas?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(faktura.getId().intValue())))
             .andExpect(jsonPath("$.[*].numerFaktury").value(hasItem(DEFAULT_NUMER_FAKTURY)))
             .andExpect(jsonPath("$.[*].kwotaFaktury").value(hasItem(DEFAULT_KWOTA_FAKTURY.doubleValue())))
@@ -313,7 +294,7 @@ public class FakturaResourceIT {
         // Get the faktura
         restFakturaMockMvc.perform(get("/api/fakturas/{id}", faktura.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(faktura.getId().intValue()))
             .andExpect(jsonPath("$.numerFaktury").value(DEFAULT_NUMER_FAKTURY))
             .andExpect(jsonPath("$.kwotaFaktury").value(DEFAULT_KWOTA_FAKTURY.doubleValue()))
@@ -322,7 +303,6 @@ public class FakturaResourceIT {
             .andExpect(jsonPath("$.statusFaktury").value(DEFAULT_STATUS_FAKTURY.toString()))
             .andExpect(jsonPath("$.zalegloscFaktury").value(DEFAULT_ZALEGLOSC_FAKTURY.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFaktura() throws Exception {
@@ -336,8 +316,6 @@ public class FakturaResourceIT {
     public void updateFaktura() throws Exception {
         // Initialize the database
         fakturaService.save(faktura);
-        // As the test used the service layer, reset the Elasticsearch mock repository
-        reset(mockFakturaSearchRepository);
 
         int databaseSizeBeforeUpdate = fakturaRepository.findAll().size();
 
@@ -354,7 +332,7 @@ public class FakturaResourceIT {
             .zalegloscFaktury(UPDATED_ZALEGLOSC_FAKTURY);
 
         restFakturaMockMvc.perform(put("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedFaktura)))
             .andExpect(status().isOk());
 
@@ -370,7 +348,7 @@ public class FakturaResourceIT {
         assertThat(testFaktura.getZalegloscFaktury()).isEqualTo(UPDATED_ZALEGLOSC_FAKTURY);
 
         // Validate the Faktura in Elasticsearch
-        verify(mockFakturaSearchRepository, times(1)).save(testFaktura);
+        verify(mockFakturaSearchRepository, times(2)).save(testFaktura);
     }
 
     @Test
@@ -378,11 +356,9 @@ public class FakturaResourceIT {
     public void updateNonExistingFaktura() throws Exception {
         int databaseSizeBeforeUpdate = fakturaRepository.findAll().size();
 
-        // Create the Faktura
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFakturaMockMvc.perform(put("/api/fakturas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(faktura)))
             .andExpect(status().isBadRequest());
 
@@ -404,7 +380,7 @@ public class FakturaResourceIT {
 
         // Delete the faktura
         restFakturaMockMvc.perform(delete("/api/fakturas/{id}", faktura.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -418,14 +394,16 @@ public class FakturaResourceIT {
     @Test
     @Transactional
     public void searchFaktura() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         fakturaService.save(faktura);
         when(mockFakturaSearchRepository.search(queryStringQuery("id:" + faktura.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(faktura), PageRequest.of(0, 1), 1));
+
         // Search the faktura
         restFakturaMockMvc.perform(get("/api/_search/fakturas?query=id:" + faktura.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(faktura.getId().intValue())))
             .andExpect(jsonPath("$.[*].numerFaktury").value(hasItem(DEFAULT_NUMER_FAKTURY)))
             .andExpect(jsonPath("$.[*].kwotaFaktury").value(hasItem(DEFAULT_KWOTA_FAKTURY.doubleValue())))

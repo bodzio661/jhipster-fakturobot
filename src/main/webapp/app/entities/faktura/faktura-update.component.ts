@@ -4,8 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
 
 import { IFaktura, Faktura } from 'app/shared/model/faktura.model';
 import { FakturaService } from './faktura.service';
@@ -14,11 +12,10 @@ import { KontrachentService } from 'app/entities/kontrachent/kontrachent.service
 
 @Component({
   selector: 'jhi-faktura-update',
-  templateUrl: './faktura-update.component.html'
+  templateUrl: './faktura-update.component.html',
 })
 export class FakturaUpdateComponent implements OnInit {
   isSaving = false;
-
   kontrachents: IKontrachent[] = [];
   dataFakturyDp: any;
 
@@ -30,7 +27,7 @@ export class FakturaUpdateComponent implements OnInit {
     typFaktury: [null, [Validators.required]],
     statusFaktury: [null, [Validators.required]],
     zalegloscFaktury: [],
-    kontrachent: []
+    kontrachent: [],
   });
 
   constructor(
@@ -44,14 +41,7 @@ export class FakturaUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ faktura }) => {
       this.updateForm(faktura);
 
-      this.kontrachentService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IKontrachent[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IKontrachent[]) => (this.kontrachents = resBody));
+      this.kontrachentService.query().subscribe((res: HttpResponse<IKontrachent[]>) => (this.kontrachents = res.body || []));
     });
   }
 
@@ -64,7 +54,7 @@ export class FakturaUpdateComponent implements OnInit {
       typFaktury: faktura.typFaktury,
       statusFaktury: faktura.statusFaktury,
       zalegloscFaktury: faktura.zalegloscFaktury,
-      kontrachent: faktura.kontrachent
+      kontrachent: faktura.kontrachent,
     });
   }
 
@@ -92,7 +82,7 @@ export class FakturaUpdateComponent implements OnInit {
       typFaktury: this.editForm.get(['typFaktury'])!.value,
       statusFaktury: this.editForm.get(['statusFaktury'])!.value,
       zalegloscFaktury: this.editForm.get(['zalegloscFaktury'])!.value,
-      kontrachent: this.editForm.get(['kontrachent'])!.value
+      kontrachent: this.editForm.get(['kontrachent'])!.value,
     };
   }
 

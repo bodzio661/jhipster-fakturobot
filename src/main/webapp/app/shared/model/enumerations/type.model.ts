@@ -1,4 +1,5 @@
 export const enum Type {
-  Kosztowa,
-  Przychodowa
+  Kosztowa = 'Kosztowa',
+
+  Przychodowa = 'Przychodowa',
 }

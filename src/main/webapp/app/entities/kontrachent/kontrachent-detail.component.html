@@ -1,38 +1,41 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="kontrachent">
-            <h2><span jhiTranslate="fakturoBotApp.kontrachent.detail.title">Kontrachent</span> {{kontrachent.id}}</h2>
+            <h2><span jhiTranslate="fakturoBotApp.kontrachent.detail.title">Kontrachent</span> {{ kontrachent.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="fakturoBotApp.kontrachent.nazwaKontrachenta">Nazwa Kontrachenta</span></dt>
                 <dd>
-                    <span>{{kontrachent.nazwaKontrachenta}}</span>
+                    <span>{{ kontrachent.nazwaKontrachenta }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.kontrachent.emailKontrachenta">Email Kontrachenta</span></dt>
                 <dd>
-                    <span>{{kontrachent.emailKontrachenta}}</span>
+                    <span>{{ kontrachent.emailKontrachenta }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.kontrachent.numerKontrachenta">Numer Kontrachenta</span></dt>
                 <dd>
-                    <span>{{kontrachent.numerKontrachenta}}</span>
+                    <span>{{ kontrachent.numerKontrachenta }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.kontrachent.terminKontrachenta">Termin Kontrachenta</span></dt>
                 <dd>
-                    <span>{{kontrachent.terminKontrachenta}}</span>
+                    <span>{{ kontrachent.terminKontrachenta }}</span>
                 </dd>
             </dl>
 
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/kontrachent', kontrachent.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

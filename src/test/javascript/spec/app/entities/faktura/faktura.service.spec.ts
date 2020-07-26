@@ -1,6 +1,5 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { FakturaService } from 'app/entities/faktura/faktura.service';
@@ -17,9 +16,10 @@ describe('Service Tests', () => {
     let elemDefault: IFaktura;
     let expectedResult: IFaktura | IFaktura[] | boolean | null;
     let currentDate: moment.Moment;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule]
+        imports: [HttpClientTestingModule],
       });
       expectedResult = null;
       injector = getTestBed();
@@ -34,14 +34,12 @@ describe('Service Tests', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            dataFaktury: currentDate.format(DATE_FORMAT)
+            dataFaktury: currentDate.format(DATE_FORMAT),
           },
           elemDefault
         );
-        service
-          .find(123)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+
+        service.find(123).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
@@ -52,20 +50,20 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            dataFaktury: currentDate.format(DATE_FORMAT)
+            dataFaktury: currentDate.format(DATE_FORMAT),
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
-            dataFaktury: currentDate
+            dataFaktury: currentDate,
           },
           returnedFromService
         );
-        service
-          .create(new Faktura())
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+
+        service.create(new Faktura()).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
         expect(expectedResult).toMatchObject(expected);
@@ -79,21 +77,20 @@ describe('Service Tests', () => {
             dataFaktury: currentDate.format(DATE_FORMAT),
             typFaktury: 'BBBBBB',
             statusFaktury: 'BBBBBB',
-            zalegloscFaktury: 'BBBBBB'
+            zalegloscFaktury: 'BBBBBB',
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            dataFaktury: currentDate
+            dataFaktury: currentDate,
           },
           returnedFromService
         );
-        service
-          .update(expected)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+
+        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
         expect(expectedResult).toMatchObject(expected);
@@ -107,23 +104,20 @@ describe('Service Tests', () => {
             dataFaktury: currentDate.format(DATE_FORMAT),
             typFaktury: 'BBBBBB',
             statusFaktury: 'BBBBBB',
-            zalegloscFaktury: 'BBBBBB'
+            zalegloscFaktury: 'BBBBBB',
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
-            dataFaktury: currentDate
+            dataFaktury: currentDate,
           },
           returnedFromService
         );
-        service
-          .query()
-          .pipe(
-            take(1),
-            map(resp => resp.body)
-          )
-          .subscribe(body => (expectedResult = body));
+
+        service.query().subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush([returnedFromService]);
         httpMock.verify();

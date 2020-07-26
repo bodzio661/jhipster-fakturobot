@@ -2,13 +2,15 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-faktura-heading" jhiTranslate="fakturoBotApp.faktura.home.createOrEditLabel">Create or edit a Faktura</h2>
+
             <div>
                 <jhi-alert-error></jhi-alert-error>
+
                 <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.numerFaktury" for="field_numerFaktury">Numer Faktury</label>
                     <input type="text" class="form-control" name="numerFaktury" id="field_numerFaktury"
@@ -20,6 +22,7 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.kwotaFaktury" for="field_kwotaFaktury">Kwota Faktury</label>
                     <input type="number" class="form-control" name="kwotaFaktury" id="field_kwotaFaktury"
@@ -35,12 +38,13 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.dataFaktury" for="field_dataFaktury">Data Faktury</label>
                     <div class="input-group">
-                        <input id="field_dataFaktury" type="text" class="form-control" name="dataFaktury" ngbDatepicker  #dataFakturyDp="ngbDatepicker" formControlName="dataFaktury"/>
+                        <input id="field_dataFaktury" type="text" class="form-control" name="dataFaktury" ngbDatepicker #dataFakturyDp="ngbDatepicker" formControlName="dataFaktury"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="dataFakturyDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="dataFakturyDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                     <div *ngIf="editForm.get('dataFaktury')!.invalid && (editForm.get('dataFaktury')!.dirty || editForm.get('dataFaktury')!.touched)">
@@ -50,11 +54,12 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.typFaktury" for="field_typFaktury">Typ Faktury</label>
                     <select class="form-control" name="typFaktury" formControlName="typFaktury" id="field_typFaktury">
-                        <option value="Kosztowa">{{'fakturoBotApp.Type.Kosztowa' | translate}}</option>
-                        <option value="Przychodowa">{{'fakturoBotApp.Type.Przychodowa' | translate}}</option>
+                        <option value="Kosztowa">{{ 'fakturoBotApp.Type.Kosztowa' | translate }}</option>
+                        <option value="Przychodowa">{{ 'fakturoBotApp.Type.Przychodowa' | translate }}</option>
                     </select>
                     <div *ngIf="editForm.get('typFaktury')!.invalid && (editForm.get('typFaktury')!.dirty || editForm.get('typFaktury')!.touched)">
                         <small class="form-text text-danger"
@@ -63,11 +68,12 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.statusFaktury" for="field_statusFaktury">Status Faktury</label>
                     <select class="form-control" name="statusFaktury" formControlName="statusFaktury" id="field_statusFaktury">
-                        <option value="Zaplacone">{{'fakturoBotApp.Status.Zaplacone' | translate}}</option>
-                        <option value="Nowe">{{'fakturoBotApp.Status.Nowe' | translate}}</option>
+                        <option value="Zaplacone">{{ 'fakturoBotApp.Status.Zaplacone' | translate }}</option>
+                        <option value="Nowe">{{ 'fakturoBotApp.Status.Nowe' | translate }}</option>
                     </select>
                     <div *ngIf="editForm.get('statusFaktury')!.invalid && (editForm.get('statusFaktury')!.dirty || editForm.get('statusFaktury')!.touched)">
                         <small class="form-text text-danger"
@@ -76,11 +82,12 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.zalegloscFaktury" for="field_zalegloscFaktury">Zaleglosc Faktury</label>
                     <select class="form-control" name="zalegloscFaktury" formControlName="zalegloscFaktury" id="field_zalegloscFaktury">
-                        <option value="OK">{{'fakturoBotApp.Zaleglosc.OK' | translate}}</option>
-                        <option value="Zalegla">{{'fakturoBotApp.Zaleglosc.Zalegla' | translate}}</option>
+                        <option value="OK">{{ 'fakturoBotApp.Zaleglosc.OK' | translate }}</option>
+                        <option value="Zalegla">{{ 'fakturoBotApp.Zaleglosc.Zalegla' | translate }}</option>
                     </select>
                 </div>
 
@@ -88,16 +95,18 @@
                     <label class="form-control-label" jhiTranslate="fakturoBotApp.faktura.kontrachent" for="field_kontrachent">Kontrachent</label>
                     <select class="form-control" id="field_kontrachent" name="kontrachent" formControlName="kontrachent">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="kontrachentOption.id === editForm.get('kontrachent')!.value?.id ? editForm.get('kontrachent')!.value : kontrachentOption" *ngFor="let kontrachentOption of kontrachents; trackBy: trackById">{{kontrachentOption.id}}</option>
+                        <option [ngValue]="kontrachentOption.id === editForm.get('kontrachent')!.value?.id ? editForm.get('kontrachent')!.value : kontrachentOption" *ngFor="let kontrachentOption of kontrachents; trackBy: trackById">{{ kontrachentOption.id }}</option>
                     </select>
                 </div>
             </div>
+
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
+
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>

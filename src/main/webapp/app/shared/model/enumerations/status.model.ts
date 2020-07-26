@@ -1,4 +1,5 @@
 export const enum Status {
-  Zaplacone,
-  Nowe
+  Zaplacone = 'Zaplacone',
+
+  Nowe = 'Nowe',
 }

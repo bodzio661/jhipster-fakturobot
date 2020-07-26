@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IKontrachent, Kontrachent } from 'app/shared/model/kontrachent.model';
 import { KontrachentService } from './kontrachent.service';
@@ -38,50 +38,47 @@ export const kontrachentRoute: Routes = [
   {
     path: '',
     component: KontrachentComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'fakturoBotApp.kontrachent.home.title'
+      pageTitle: 'fakturoBotApp.kontrachent.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: KontrachentDetailComponent,
     resolve: {
-      kontrachent: KontrachentResolve
+      kontrachent: KontrachentResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.kontrachent.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.kontrachent.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: KontrachentUpdateComponent,
     resolve: {
-      kontrachent: KontrachentResolve
+      kontrachent: KontrachentResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.kontrachent.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.kontrachent.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: KontrachentUpdateComponent,
     resolve: {
-      kontrachent: KontrachentResolve
+      kontrachent: KontrachentResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.kontrachent.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.kontrachent.home.title',
     },
-    canActivate: [UserRouteAccessService]
-  }
+    canActivate: [UserRouteAccessService],
+  },
 ];

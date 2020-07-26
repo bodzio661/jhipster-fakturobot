@@ -34,12 +34,6 @@ public class FakturaServiceImpl implements FakturaService {
         this.fakturaSearchRepository = fakturaSearchRepository;
     }
 
-    /**
-     * Save a faktura.
-     *
-     * @param faktura the entity to save.
-     * @return the persisted entity.
-     */
     @Override
     public Faktura save(Faktura faktura) {
         log.debug("Request to save Faktura : {}", faktura);
@@ -48,12 +42,6 @@ public class FakturaServiceImpl implements FakturaService {
         return result;
     }
 
-    /**
-     * Get all the fakturas.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<Faktura> findAll(Pageable pageable) {
@@ -62,12 +50,6 @@ public class FakturaServiceImpl implements FakturaService {
     }
 
 
-    /**
-     * Get one faktura by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
     @Override
     @Transactional(readOnly = true)
     public Optional<Faktura> findOne(Long id) {
@@ -75,11 +57,6 @@ public class FakturaServiceImpl implements FakturaService {
         return fakturaRepository.findById(id);
     }
 
-    /**
-     * Delete the faktura by id.
-     *
-     * @param id the id of the entity.
-     */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Faktura : {}", id);
@@ -87,13 +64,6 @@ public class FakturaServiceImpl implements FakturaService {
         fakturaSearchRepository.deleteById(id);
     }
 
-    /**
-     * Search for the faktura corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<Faktura> search(String query, Pageable pageable) {
