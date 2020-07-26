@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [FakturoBotTestModule],
         declarations: [KontrachentUpdateComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(KontrachentUpdateComponent, '')
         .compileComponents();

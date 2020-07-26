@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -90,9 +89,7 @@ public class KontrachentResource {
     /**
      * {@code GET  /kontrachents} : get all the kontrachents.
      *
-
      * @param pageable the pagination information.
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of kontrachents in body.
      */
     @GetMapping("/kontrachents")
@@ -143,5 +140,5 @@ public class KontrachentResource {
         Page<Kontrachent> page = kontrachentService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
+        }
 }

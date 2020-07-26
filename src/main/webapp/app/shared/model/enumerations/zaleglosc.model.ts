@@ -1,4 +1,5 @@
 export const enum Zaleglosc {
-  OK,
-  Zalegla
+  OK = 'OK',
+
+  Zalegla = 'Zalegla',
 }

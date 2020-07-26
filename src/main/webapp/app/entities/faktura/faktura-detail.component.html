@@ -1,38 +1,41 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="faktura">
-            <h2><span jhiTranslate="fakturoBotApp.faktura.detail.title">Faktura</span> {{faktura.id}}</h2>
+            <h2><span jhiTranslate="fakturoBotApp.faktura.detail.title">Faktura</span> {{ faktura.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="fakturoBotApp.faktura.numerFaktury">Numer Faktury</span></dt>
                 <dd>
-                    <span>{{faktura.numerFaktury}}</span>
+                    <span>{{ faktura.numerFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.kwotaFaktury">Kwota Faktury</span></dt>
                 <dd>
-                    <span>{{faktura.kwotaFaktury}}</span>
+                    <span>{{ faktura.kwotaFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.dataFaktury">Data Faktury</span></dt>
                 <dd>
-                    <span>{{faktura.dataFaktury}}</span>
+                    <span>{{ faktura.dataFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.typFaktury">Typ Faktury</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'fakturoBotApp.Type.' + faktura.typFaktury}}">{{faktura.typFaktury}}</span>
+                    <span jhiTranslate="{{ 'fakturoBotApp.Type.' + faktura.typFaktury }}">{{ faktura.typFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.statusFaktury">Status Faktury</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'fakturoBotApp.Status.' + faktura.statusFaktury}}">{{faktura.statusFaktury}}</span>
+                    <span jhiTranslate="{{ 'fakturoBotApp.Status.' + faktura.statusFaktury }}">{{ faktura.statusFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.zalegloscFaktury">Zaleglosc Faktury</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'fakturoBotApp.Zaleglosc.' + faktura.zalegloscFaktury}}">{{faktura.zalegloscFaktury}}</span>
+                    <span jhiTranslate="{{ 'fakturoBotApp.Zaleglosc.' + faktura.zalegloscFaktury }}">{{ faktura.zalegloscFaktury }}</span>
                 </dd>
                 <dt><span jhiTranslate="fakturoBotApp.faktura.kontrachent">Kontrachent</span></dt>
                 <dd>
                     <div *ngIf="faktura.kontrachent">
-                        <a [routerLink]="['/kontrachent', faktura.kontrachent?.id, 'view']">{{faktura.kontrachent?.id}}</a>
+                        <a [routerLink]="['/kontrachent', faktura.kontrachent?.id, 'view']">{{ faktura.kontrachent?.id }}</a>
                     </div>
                 </dd>
             </dl>
@@ -40,13 +43,13 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/faktura', faktura.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

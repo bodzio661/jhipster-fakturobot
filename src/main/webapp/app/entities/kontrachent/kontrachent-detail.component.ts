@@ -5,7 +5,7 @@ import { IKontrachent } from 'app/shared/model/kontrachent.model';
 
 @Component({
   selector: 'jhi-kontrachent-detail',
-  templateUrl: './kontrachent-detail.component.html'
+  templateUrl: './kontrachent-detail.component.html',
 })
 export class KontrachentDetailComponent implements OnInit {
   kontrachent: IKontrachent | null = null;
@@ -13,9 +13,7 @@ export class KontrachentDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ kontrachent }) => {
-      this.kontrachent = kontrachent;
-    });
+    this.activatedRoute.data.subscribe(({ kontrachent }) => (this.kontrachent = kontrachent));
   }
 
   previousState(): void {

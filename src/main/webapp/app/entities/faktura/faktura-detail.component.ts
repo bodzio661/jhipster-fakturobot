@@ -5,7 +5,7 @@ import { IFaktura } from 'app/shared/model/faktura.model';
 
 @Component({
   selector: 'jhi-faktura-detail',
-  templateUrl: './faktura-detail.component.html'
+  templateUrl: './faktura-detail.component.html',
 })
 export class FakturaDetailComponent implements OnInit {
   faktura: IFaktura | null = null;
@@ -13,9 +13,7 @@ export class FakturaDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ faktura }) => {
-      this.faktura = faktura;
-    });
+    this.activatedRoute.data.subscribe(({ faktura }) => (this.faktura = faktura));
   }
 
   previousState(): void {

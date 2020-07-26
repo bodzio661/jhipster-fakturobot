@@ -11,6 +11,6 @@ import { fakturaRoute } from './faktura.route';
 @NgModule({
   imports: [FakturoBotSharedModule, RouterModule.forChild(fakturaRoute)],
   declarations: [FakturaComponent, FakturaDetailComponent, FakturaUpdateComponent, FakturaDeleteDialogComponent],
-  entryComponents: [FakturaDeleteDialogComponent]
+  entryComponents: [FakturaDeleteDialogComponent],
 })
 export class FakturoBotFakturaModule {}

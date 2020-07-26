@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IFaktura, Faktura } from 'app/shared/model/faktura.model';
 import { FakturaService } from './faktura.service';
@@ -38,50 +38,47 @@ export const fakturaRoute: Routes = [
   {
     path: '',
     component: FakturaComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'fakturoBotApp.faktura.home.title'
+      pageTitle: 'fakturoBotApp.faktura.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: FakturaDetailComponent,
     resolve: {
-      faktura: FakturaResolve
+      faktura: FakturaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.faktura.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.faktura.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: FakturaUpdateComponent,
     resolve: {
-      faktura: FakturaResolve
+      faktura: FakturaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.faktura.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.faktura.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: FakturaUpdateComponent,
     resolve: {
-      faktura: FakturaResolve
+      faktura: FakturaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'fakturoBotApp.faktura.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'fakturoBotApp.faktura.home.title',
     },
-    canActivate: [UserRouteAccessService]
-  }
+    canActivate: [UserRouteAccessService],
+  },
 ];

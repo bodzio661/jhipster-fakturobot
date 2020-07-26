@@ -5,28 +5,25 @@ import com.sion0909.fakturobot.domain.Kontrachent;
 import com.sion0909.fakturobot.repository.KontrachentRepository;
 import com.sion0909.fakturobot.repository.search.KontrachentSearchRepository;
 import com.sion0909.fakturobot.service.KontrachentService;
-import com.sion0909.fakturobot.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sion0909.fakturobot.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -38,6 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link KontrachentResource} REST controller.
  */
 @SpringBootTest(classes = FakturoBotApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class KontrachentResourceIT {
 
     private static final String DEFAULT_NAZWA_KONTRACHENTA = "AAAAAAAAAA";
@@ -67,35 +67,12 @@ public class KontrachentResourceIT {
     private KontrachentSearchRepository mockKontrachentSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restKontrachentMockMvc;
 
     private Kontrachent kontrachent;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final KontrachentResource kontrachentResource = new KontrachentResource(kontrachentService);
-        this.restKontrachentMockMvc = MockMvcBuilders.standaloneSetup(kontrachentResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -135,10 +112,9 @@ public class KontrachentResourceIT {
     @Transactional
     public void createKontrachent() throws Exception {
         int databaseSizeBeforeCreate = kontrachentRepository.findAll().size();
-
         // Create the Kontrachent
         restKontrachentMockMvc.perform(post("/api/kontrachents")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(kontrachent)))
             .andExpect(status().isCreated());
 
@@ -165,7 +141,7 @@ public class KontrachentResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restKontrachentMockMvc.perform(post("/api/kontrachents")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(kontrachent)))
             .andExpect(status().isBadRequest());
 
@@ -187,7 +163,7 @@ public class KontrachentResourceIT {
         // Get all the kontrachentList
         restKontrachentMockMvc.perform(get("/api/kontrachents?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(kontrachent.getId().intValue())))
             .andExpect(jsonPath("$.[*].nazwaKontrachenta").value(hasItem(DEFAULT_NAZWA_KONTRACHENTA)))
             .andExpect(jsonPath("$.[*].emailKontrachenta").value(hasItem(DEFAULT_EMAIL_KONTRACHENTA)))
@@ -204,14 +180,13 @@ public class KontrachentResourceIT {
         // Get the kontrachent
         restKontrachentMockMvc.perform(get("/api/kontrachents/{id}", kontrachent.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(kontrachent.getId().intValue()))
             .andExpect(jsonPath("$.nazwaKontrachenta").value(DEFAULT_NAZWA_KONTRACHENTA))
             .andExpect(jsonPath("$.emailKontrachenta").value(DEFAULT_EMAIL_KONTRACHENTA))
             .andExpect(jsonPath("$.numerKontrachenta").value(DEFAULT_NUMER_KONTRACHENTA))
             .andExpect(jsonPath("$.terminKontrachenta").value(DEFAULT_TERMIN_KONTRACHENTA));
     }
-
     @Test
     @Transactional
     public void getNonExistingKontrachent() throws Exception {
@@ -225,8 +200,6 @@ public class KontrachentResourceIT {
     public void updateKontrachent() throws Exception {
         // Initialize the database
         kontrachentService.save(kontrachent);
-        // As the test used the service layer, reset the Elasticsearch mock repository
-        reset(mockKontrachentSearchRepository);
 
         int databaseSizeBeforeUpdate = kontrachentRepository.findAll().size();
 
@@ -241,7 +214,7 @@ public class KontrachentResourceIT {
             .terminKontrachenta(UPDATED_TERMIN_KONTRACHENTA);
 
         restKontrachentMockMvc.perform(put("/api/kontrachents")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedKontrachent)))
             .andExpect(status().isOk());
 
@@ -255,7 +228,7 @@ public class KontrachentResourceIT {
         assertThat(testKontrachent.getTerminKontrachenta()).isEqualTo(UPDATED_TERMIN_KONTRACHENTA);
 
         // Validate the Kontrachent in Elasticsearch
-        verify(mockKontrachentSearchRepository, times(1)).save(testKontrachent);
+        verify(mockKontrachentSearchRepository, times(2)).save(testKontrachent);
     }
 
     @Test
@@ -263,11 +236,9 @@ public class KontrachentResourceIT {
     public void updateNonExistingKontrachent() throws Exception {
         int databaseSizeBeforeUpdate = kontrachentRepository.findAll().size();
 
-        // Create the Kontrachent
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restKontrachentMockMvc.perform(put("/api/kontrachents")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(kontrachent)))
             .andExpect(status().isBadRequest());
 
@@ -289,7 +260,7 @@ public class KontrachentResourceIT {
 
         // Delete the kontrachent
         restKontrachentMockMvc.perform(delete("/api/kontrachents/{id}", kontrachent.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -303,14 +274,16 @@ public class KontrachentResourceIT {
     @Test
     @Transactional
     public void searchKontrachent() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         kontrachentService.save(kontrachent);
         when(mockKontrachentSearchRepository.search(queryStringQuery("id:" + kontrachent.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(kontrachent), PageRequest.of(0, 1), 1));
+
         // Search the kontrachent
         restKontrachentMockMvc.perform(get("/api/_search/kontrachents?query=id:" + kontrachent.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(kontrachent.getId().intValue())))
             .andExpect(jsonPath("$.[*].nazwaKontrachenta").value(hasItem(DEFAULT_NAZWA_KONTRACHENTA)))
             .andExpect(jsonPath("$.[*].emailKontrachenta").value(hasItem(DEFAULT_EMAIL_KONTRACHENTA)))

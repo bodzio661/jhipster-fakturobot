@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption, SearchWithPagination } from 'app/shared/util/request-util';
@@ -60,7 +59,7 @@ export class FakturaService {
 
   protected convertDateFromClient(faktura: IFaktura): IFaktura {
     const copy: IFaktura = Object.assign({}, faktura, {
-      dataFaktury: faktura.dataFaktury && faktura.dataFaktury.isValid() ? faktura.dataFaktury.format(DATE_FORMAT) : undefined
+      dataFaktury: faktura.dataFaktury && faktura.dataFaktury.isValid() ? faktura.dataFaktury.format(DATE_FORMAT) : undefined,
     });
     return copy;
   }

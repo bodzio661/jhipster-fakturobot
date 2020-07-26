@@ -6,7 +6,7 @@ import { IKontrachent } from 'app/shared/model/kontrachent.model';
 import { KontrachentService } from './kontrachent.service';
 
 @Component({
-  templateUrl: './kontrachent-delete-dialog.component.html'
+  templateUrl: './kontrachent-delete-dialog.component.html',
 })
 export class KontrachentDeleteDialogComponent {
   kontrachent?: IKontrachent;
@@ -17,7 +17,7 @@ export class KontrachentDeleteDialogComponent {
     protected eventManager: JhiEventManager
   ) {}
 
-  clear(): void {
+  cancel(): void {
     this.activeModal.dismiss();
   }
 

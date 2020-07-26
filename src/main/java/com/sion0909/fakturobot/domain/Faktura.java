@@ -1,4 +1,5 @@
 package com.sion0909.fakturobot.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -21,7 +22,7 @@ import com.sion0909.fakturobot.domain.enumeration.Zaleglosc;
  */
 @Entity
 @Table(name = "faktura")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "faktura")
 public class Faktura implements Serializable {
 
@@ -29,7 +30,6 @@ public class Faktura implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -59,10 +59,10 @@ public class Faktura implements Serializable {
     private Zaleglosc zalegloscFaktury;
 
     @ManyToOne
-    @JsonIgnoreProperties("fakturas")
+    @JsonIgnoreProperties(value = "fakturas", allowSetters = true)
     private Kontrachent kontrachent;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -161,7 +161,7 @@ public class Faktura implements Serializable {
     public void setKontrachent(Kontrachent kontrachent) {
         this.kontrachent = kontrachent;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -179,6 +179,7 @@ public class Faktura implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Faktura{" +

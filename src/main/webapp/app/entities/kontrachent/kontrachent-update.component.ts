@@ -10,7 +10,7 @@ import { KontrachentService } from './kontrachent.service';
 
 @Component({
   selector: 'jhi-kontrachent-update',
-  templateUrl: './kontrachent-update.component.html'
+  templateUrl: './kontrachent-update.component.html',
 })
 export class KontrachentUpdateComponent implements OnInit {
   isSaving = false;
@@ -20,7 +20,7 @@ export class KontrachentUpdateComponent implements OnInit {
     nazwaKontrachenta: [],
     emailKontrachenta: [],
     numerKontrachenta: [],
-    terminKontrachenta: []
+    terminKontrachenta: [],
   });
 
   constructor(protected kontrachentService: KontrachentService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -37,7 +37,7 @@ export class KontrachentUpdateComponent implements OnInit {
       nazwaKontrachenta: kontrachent.nazwaKontrachenta,
       emailKontrachenta: kontrachent.emailKontrachenta,
       numerKontrachenta: kontrachent.numerKontrachenta,
-      terminKontrachenta: kontrachent.terminKontrachenta
+      terminKontrachenta: kontrachent.terminKontrachenta,
     });
   }
 
@@ -62,7 +62,7 @@ export class KontrachentUpdateComponent implements OnInit {
       nazwaKontrachenta: this.editForm.get(['nazwaKontrachenta'])!.value,
       emailKontrachenta: this.editForm.get(['emailKontrachenta'])!.value,
       numerKontrachenta: this.editForm.get(['numerKontrachenta'])!.value,
-      terminKontrachenta: this.editForm.get(['terminKontrachenta'])!.value
+      terminKontrachenta: this.editForm.get(['terminKontrachenta'])!.value,
     };
   }
 

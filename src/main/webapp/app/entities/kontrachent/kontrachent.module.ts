@@ -11,6 +11,6 @@ import { kontrachentRoute } from './kontrachent.route';
 @NgModule({
   imports: [FakturoBotSharedModule, RouterModule.forChild(kontrachentRoute)],
   declarations: [KontrachentComponent, KontrachentDetailComponent, KontrachentUpdateComponent, KontrachentDeleteDialogComponent],
-  entryComponents: [KontrachentDeleteDialogComponent]
+  entryComponents: [KontrachentDeleteDialogComponent],
 })
 export class FakturoBotKontrachentModule {}

@@ -34,12 +34,6 @@ public class KontrachentServiceImpl implements KontrachentService {
         this.kontrachentSearchRepository = kontrachentSearchRepository;
     }
 
-    /**
-     * Save a kontrachent.
-     *
-     * @param kontrachent the entity to save.
-     * @return the persisted entity.
-     */
     @Override
     public Kontrachent save(Kontrachent kontrachent) {
         log.debug("Request to save Kontrachent : {}", kontrachent);
@@ -48,12 +42,6 @@ public class KontrachentServiceImpl implements KontrachentService {
         return result;
     }
 
-    /**
-     * Get all the kontrachents.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<Kontrachent> findAll(Pageable pageable) {
@@ -62,12 +50,6 @@ public class KontrachentServiceImpl implements KontrachentService {
     }
 
 
-    /**
-     * Get one kontrachent by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
     @Override
     @Transactional(readOnly = true)
     public Optional<Kontrachent> findOne(Long id) {
@@ -75,11 +57,6 @@ public class KontrachentServiceImpl implements KontrachentService {
         return kontrachentRepository.findById(id);
     }
 
-    /**
-     * Delete the kontrachent by id.
-     *
-     * @param id the id of the entity.
-     */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Kontrachent : {}", id);
@@ -87,13 +64,6 @@ public class KontrachentServiceImpl implements KontrachentService {
         kontrachentSearchRepository.deleteById(id);
     }
 
-    /**
-     * Search for the kontrachent corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<Kontrachent> search(String query, Pageable pageable) {
